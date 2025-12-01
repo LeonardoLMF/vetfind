@@ -1,6 +1,6 @@
 package com.leo.vetfind.repository;
 
-import com.leo.vetfind.entity.Veterinario;
+import com.leo.vetfind.entity.veterinario.Veterinario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
