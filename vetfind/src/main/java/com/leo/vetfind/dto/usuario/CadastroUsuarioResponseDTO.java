@@ -1,4 +1,4 @@
-package com.leo.vetfind.dto;
+package com.leo.vetfind.dto.usuario;
 
 public class CadastroUsuarioResponseDTO {
     //não passar a senha pois é sensivel

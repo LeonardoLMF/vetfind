@@ -1,9 +1,11 @@
-package com.leo.vetfind.dto;
+package com.leo.vetfind.dto.usuario;
 
 
+import com.leo.vetfind.entity.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -18,6 +20,7 @@ public class CadastroUsuarioRequestDTO {
     private String email;
 
     @NotBlank(message = "A senha é obrigatória")
+    @Size(min = 5)
     private String senha;
 
     @NotBlank(message = "O numero de telefone é obrigatório")
@@ -25,5 +28,5 @@ public class CadastroUsuarioRequestDTO {
     private String telefone;
 
     @NotBlank(message = "O tipo do usuário é obrigatório")
-    private String tipoUsuario;
+    private TipoUsuario tipoUsuario;
 }
