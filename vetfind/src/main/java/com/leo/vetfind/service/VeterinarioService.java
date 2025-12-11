@@ -29,7 +29,6 @@ public class VeterinarioService {
 
         //cria uma entidade vet
         Veterinario veterinario = Veterinario.builder()
-                .id(usuario.getId())
                 .crmv(dto.getCrmv())
                 .usuario(usuario)
                 .build();

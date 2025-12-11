@@ -2,10 +2,7 @@ package com.leo.vetfind.dto.usuario;
 
 
 import com.leo.vetfind.entity.TipoUsuario;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Getter
@@ -27,6 +24,6 @@ public class CadastroUsuarioRequestDTO {
     @Pattern(regexp = "\\d{11}", message = "O numero de telefone deve ter 11 dígitos") // regex pego do stackoverflow
     private String telefone;
 
-    @NotBlank(message = "O tipo do usuário é obrigatório")
+    @NotNull(message = "O tipo do usuário é obrigatório")
     private TipoUsuario tipoUsuario;
 }

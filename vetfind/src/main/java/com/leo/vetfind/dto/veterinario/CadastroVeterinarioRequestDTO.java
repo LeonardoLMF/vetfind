@@ -1,6 +1,7 @@
 package com.leo.vetfind.dto.veterinario;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -13,6 +14,6 @@ public class CadastroVeterinarioRequestDTO {
     @NotBlank(message = "CRMV é obrigatorio")
     private String crmv;
 
-    @NotBlank(message = "O Id de usuário é obrigatório")
+    @NotNull(message = "O Id de usuário é obrigatório")
     private Long usuarioId;
 }
