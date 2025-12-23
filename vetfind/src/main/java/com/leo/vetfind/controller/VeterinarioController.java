@@ -2,7 +2,8 @@ package com.leo.vetfind.controller;
 
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.service.VeterinarioService;
+import com.leo.vetfind.service.veterinario.VeterinarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class VeterinarioController {
     private final VeterinarioService veterinarioService;
 
     @PostMapping
-    public ResponseEntity<CadastroVeterinarioResponseDTO> criarVeterinario(@RequestBody CadastroVeterinarioRequestDTO dto) {
+    public ResponseEntity<CadastroVeterinarioResponseDTO> criarVeterinario(@Valid @RequestBody CadastroVeterinarioRequestDTO dto) {
         CadastroVeterinarioResponseDTO response = veterinarioService.criarVeterinario(dto);
         return ResponseEntity.ok(response);
     }

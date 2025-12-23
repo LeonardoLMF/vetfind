@@ -1,4 +1,4 @@
-package com.leo.vetfind.service;
+package com.leo.vetfind.service.veterinario;
 
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
