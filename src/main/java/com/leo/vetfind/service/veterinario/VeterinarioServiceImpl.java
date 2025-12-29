@@ -54,8 +54,6 @@ public class VeterinarioServiceImpl implements VeterinarioService{
 
         return veterinarioMapper.toResponseDTO(salvo);
 
-
-
     }
 
     @Override

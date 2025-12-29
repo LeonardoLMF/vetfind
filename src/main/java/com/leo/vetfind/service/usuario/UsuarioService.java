@@ -4,6 +4,7 @@ package com.leo.vetfind.service.usuario;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
 import com.leo.vetfind.entity.usuario.Usuario;
+import com.leo.vetfind.exception.UsuarioNotFoundException;
 import com.leo.vetfind.mapper.UsuarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class UsuarioService {
     public CadastroUsuarioResponseDTO criarUsuario(CadastroUsuarioRequestDTO dto) {
         // Garantir que o email seja unico
         if (usuarioRepository.existsByEmail(dto.getEmail())) {
-            throw new IllegalArgumentException("Email já cadastrado.");
+            throw new UsuarioNotFoundException();
         }
 
         // cria um usuario
