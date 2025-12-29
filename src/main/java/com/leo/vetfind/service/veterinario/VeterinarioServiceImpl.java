@@ -5,6 +5,7 @@ import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
 import com.leo.vetfind.entity.TipoUsuario;
 import com.leo.vetfind.entity.usuario.Usuario;
 import com.leo.vetfind.entity.veterinario.Veterinario;
+import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.VeterinarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
 import com.leo.vetfind.repository.VeterinarioRepository;
@@ -26,21 +27,21 @@ public class VeterinarioServiceImpl implements VeterinarioService{
 
         // verifica se ja existe alg registrado com a crmv
         if (veterinarioRepository.existsByCrmv(dto.getCrmv())) {
-            throw new IllegalArgumentException("CRMV já cadastrado.");
+            throw new CrmvCadastradoException();
         }
 
         // verifica se o usuario existe
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+                .orElseThrow(UsuarioNotFoundException::new);
 
         // verifica se o tipo do usuario é diferente de VETERINARIO
         if (usuario.getTipoUsuario() != TipoUsuario.VETERINARIO) {
-            throw new IllegalArgumentException("Usuário não é do tipo VETERINARIO.");
+            throw new TipoUsuarioInvalidoException();
         }
 
         // verifica se o usuario ja possui cadastro
         if (usuario.getVeterinario() != null) {
-            throw new IllegalArgumentException("Usuário já possui cadastro de veterinário.");
+            throw new VeterinarioJaVinculadoException();
         }
 
         //cria uma entidade veterinario
