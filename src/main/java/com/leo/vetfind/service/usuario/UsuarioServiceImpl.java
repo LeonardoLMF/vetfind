@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public CadastroUsuarioResponseDTO buscarUsuarioPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(UsuarioNotFoundException::new);
+                .orElseThrow(() -> new UsuarioNotFoundException(id));
         return usuarioMapper.toResponseDTO(usuario);
     }
 }

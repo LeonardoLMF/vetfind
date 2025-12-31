@@ -32,7 +32,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
 
         // verifica se o usuario existe
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-                .orElseThrow(UsuarioNotFoundException::new);
+                .orElseThrow(() -> new UsuarioNotFoundException(dto.getUsuarioId()));
 
         // verifica se o tipo do usuario é diferente de VETERINARIO
         if (usuario.getTipoUsuario() != TipoUsuario.VETERINARIO) {
@@ -60,7 +60,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     @Override
     public CadastroVeterinarioResponseDTO getById(Long id) {
         Veterinario veterinario = veterinarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Veterinário não encontrado."));
+                .orElseThrow(() -> new VeterinarioNotFoundException(id));
 
         return veterinarioMapper.toResponseDTO(veterinario);
     }

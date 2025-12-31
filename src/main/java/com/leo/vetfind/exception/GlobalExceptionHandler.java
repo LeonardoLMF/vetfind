@@ -16,20 +16,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleBusinessException(BusinessException ex,
                                                                     HttpServletRequest request)
     {
-        ApiErrorResponse erro = new ApiErrorResponse(
+        ApiErrorResponse error = new ApiErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Erro de regra de negocio",
+                "Erro de regra de negócio",
                 ex.getMessage(),
                 request.getRequestURI()
         );
-        return ResponseEntity.badRequest().body(erro);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     // Recurso nao encontrado
     @ExceptionHandler({UsuarioNotFoundException.class, VeterinarioNotFoundException.class})
-    public ResponseEntity<ApiErrorResponse> handleNotFound(RuntimeException ex,
-                                                           HttpServletRequest request)
+    public ResponseEntity<ApiErrorResponse> handleNotFound(RuntimeException ex, HttpServletRequest request)
+
     {
         ApiErrorResponse erro = new ApiErrorResponse(
                 LocalDateTime.now(),
@@ -43,8 +43,8 @@ public class GlobalExceptionHandler {
 
     // Erro inesperado
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleGeneric( Exception ex,
-                                                           HttpServletRequest request)
+    public ResponseEntity<ApiErrorResponse> handleGeneric( Exception ex, HttpServletRequest request)
+
     {
         ApiErrorResponse erro = new ApiErrorResponse(
                 LocalDateTime.now(),
