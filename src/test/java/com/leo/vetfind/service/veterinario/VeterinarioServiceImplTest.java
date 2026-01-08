@@ -220,11 +220,9 @@ public class VeterinarioServiceImplTest {
         when(veterinarioMapper.toResponseDTO(veterinarioAtualizado))
                 .thenReturn(responseDTO);
 
-        // Act
         CadastroVeterinarioResponseDTO resultado =
                 veterinarioService.atualizar(veterinarioId, dto);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals("CRMV999", resultado.getCrmv());
 
@@ -232,6 +230,14 @@ public class VeterinarioServiceImplTest {
         verify(veterinarioRepository).save(any(Veterinario.class));
     }
 
+    @Test
+    void DeletarVeterinarioInexistente() {
+        when(veterinarioRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(VeterinarioNotFoundException.class,
+                () -> veterinarioService.deletar(99L));
+    }
 
 }
 

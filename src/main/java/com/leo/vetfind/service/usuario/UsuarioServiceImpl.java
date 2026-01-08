@@ -2,6 +2,7 @@ package com.leo.vetfind.service.usuario;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
+import com.leo.vetfind.dto.usuario.UpdateUsuarioRequestDTO;
 import com.leo.vetfind.entity.usuario.Usuario;
 import com.leo.vetfind.exception.EmailJaCadastradoException;
 import com.leo.vetfind.exception.UsuarioNotFoundException;
@@ -47,4 +48,27 @@ public class UsuarioServiceImpl implements UsuarioService{
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
         return usuarioMapper.toResponseDTO(usuario);
     }
+
+    @Override
+    public CadastroUsuarioResponseDTO atualizar(Long id, UpdateUsuarioRequestDTO dto) {
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNotFoundException(id));
+
+        // email não pode ser duplicado
+        if (!usuario.getEmail().equals(dto.getEmail())
+                && usuarioRepository.existsByEmail(dto.getEmail())) {
+            throw new EmailJaCadastradoException();
+        }
+
+        // atualiza apenas campos permitidos
+        usuario.setEmail(dto.getEmail());
+        usuario.setTelefone(dto.getTelefone());
+        usuario.setSenha(dto.getSenha());
+
+        Usuario atualizado = usuarioRepository.save(usuario);
+
+        return usuarioMapper.toResponseDTO(atualizado);
+    }
+
 }

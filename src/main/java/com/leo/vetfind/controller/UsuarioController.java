@@ -2,6 +2,7 @@ package com.leo.vetfind.controller;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
+import com.leo.vetfind.dto.usuario.UpdateUsuarioRequestDTO;
 import com.leo.vetfind.service.usuario.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,11 @@ public class UsuarioController {
         CadastroUsuarioResponseDTO usuario = usuarioService.buscarUsuarioPorId(id);
         return ResponseEntity.ok(usuario);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CadastroUsuarioResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UpdateUsuarioRequestDTO dto) {
+        return ResponseEntity.ok(usuarioService.atualizar(id, dto));
+    }
+
 
 }
