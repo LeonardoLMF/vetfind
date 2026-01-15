@@ -2,7 +2,7 @@ package com.leo.vetfind.mapper;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
-import com.leo.vetfind.entity.usuario.Usuario;
+import com.leo.vetfind.entity.Usuario;
 import org.mapstruct.Mapper;
 
 import java.util.List;

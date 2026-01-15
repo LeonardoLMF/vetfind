@@ -3,9 +3,9 @@ package com.leo.vetfind.service.veterinario;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
 import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
-import com.leo.vetfind.entity.TipoUsuario;
-import com.leo.vetfind.entity.usuario.Usuario;
-import com.leo.vetfind.entity.veterinario.Veterinario;
+import com.leo.vetfind.entity.UserType;
+import com.leo.vetfind.entity.Usuario;
+import com.leo.vetfind.entity.Veterinario;
 import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.VeterinarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
@@ -44,7 +44,7 @@ public class VeterinarioServiceImplTest {
 
         Usuario usuario = Usuario.builder()
                 .id(1L)
-                .tipoUsuario(TipoUsuario.VETERINARIO)
+                .userType(UserType.VETERINARIO)
                 .build();
 
         Veterinario veterinario = Veterinario.builder()
@@ -174,7 +174,7 @@ public class VeterinarioServiceImplTest {
                 .usuario(Usuario.builder().id(20L).build())
                 .build();
 
-        when(veterinarioRepository.findByUsuario_TipoUsuario(TipoUsuario.VETERINARIO))
+        when(veterinarioRepository.findByUsuario_TipoUsuario(UserType.VETERINARIO))
                 .thenReturn(List.of(vet1, vet2));
 
         when(veterinarioMapper.toResponseDTO(vet1))
@@ -247,7 +247,7 @@ public class VeterinarioServiceImplTest {
 
         Usuario usuario = Usuario.builder()
                 .id(1L)
-                .tipoUsuario(TipoUsuario.PROPRIETARIO) // NÃO é veterinário
+                .userType(UserType.PROPRIETARIO) // NÃO é veterinário
                 .build();
 
         when(veterinarioRepository.existsByCrmv("CRMV123"))
@@ -276,7 +276,7 @@ public class VeterinarioServiceImplTest {
 
         Usuario usuario = Usuario.builder()
                 .id(1L)
-                .tipoUsuario(TipoUsuario.VETERINARIO)
+                .userType(UserType.VETERINARIO)
                 .veterinario(Veterinario.builder().id(10L).build())
                 .build();
 

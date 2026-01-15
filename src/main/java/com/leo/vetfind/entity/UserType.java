@@ -1,6 +1,6 @@
 package com.leo.vetfind.entity;
 
-public enum TipoUsuario {
+public enum UserType {
     PROPRIETARIO,
     VETERINARIO
 }

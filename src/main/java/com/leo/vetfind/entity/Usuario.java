@@ -1,7 +1,5 @@
-package com.leo.vetfind.entity.usuario;
+package com.leo.vetfind.entity;
 
-import com.leo.vetfind.entity.TipoUsuario;
-import com.leo.vetfind.entity.veterinario.Veterinario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,7 +31,7 @@ public class Usuario {
     //determino se o usuario é um PROPRIETARIO ou VETERINARIO
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoUsuario tipoUsuario;
+    private UserType userType;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Veterinario veterinario;

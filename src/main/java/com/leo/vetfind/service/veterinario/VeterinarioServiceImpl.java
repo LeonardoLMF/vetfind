@@ -3,9 +3,9 @@ package com.leo.vetfind.service.veterinario;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
 import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
-import com.leo.vetfind.entity.TipoUsuario;
-import com.leo.vetfind.entity.usuario.Usuario;
-import com.leo.vetfind.entity.veterinario.Veterinario;
+import com.leo.vetfind.entity.UserType;
+import com.leo.vetfind.entity.Usuario;
+import com.leo.vetfind.entity.Veterinario;
 import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.VeterinarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
@@ -36,7 +36,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
                 .orElseThrow(() -> new UsuarioNotFoundException(dto.getUsuarioId()));
 
         // verifica se o tipo do usuario é diferente de VETERINARIO
-        if (usuario.getTipoUsuario() != TipoUsuario.VETERINARIO) {
+        if (usuario.getUserType() != UserType.VETERINARIO) {
             throw new TipoUsuarioInvalidoException();
         }
 
@@ -69,7 +69,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     @Override
     public List<CadastroVeterinarioResponseDTO> getAll() {
         return veterinarioRepository
-                .findByUsuario_TipoUsuario(TipoUsuario.VETERINARIO)
+                .findByUsuario_TipoUsuario(UserType.VETERINARIO)
                 .stream()
                 .map(veterinarioMapper::toResponseDTO)
                 .toList();

@@ -1,7 +1,7 @@
 package com.leo.vetfind.repository;
 
-import com.leo.vetfind.entity.TipoUsuario;
-import com.leo.vetfind.entity.veterinario.Veterinario;
+import com.leo.vetfind.entity.UserType;
+import com.leo.vetfind.entity.Veterinario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long> 
 
     Optional<Veterinario> findByCrmv (String crmv);
     boolean existsByCrmv(String crmv);
-    List<Veterinario> findByUsuario_TipoUsuario(TipoUsuario tipoUsuario);
+    List<Veterinario> findByUsuario_TipoUsuario(UserType userType);
 
 }

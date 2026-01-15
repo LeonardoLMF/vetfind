@@ -1,6 +1,5 @@
-package com.leo.vetfind.entity.veterinario;
+package com.leo.vetfind.entity;
 
-import com.leo.vetfind.entity.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 

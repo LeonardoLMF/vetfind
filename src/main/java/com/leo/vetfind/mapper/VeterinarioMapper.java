@@ -1,7 +1,7 @@
 package com.leo.vetfind.mapper;
 
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.entity.veterinario.Veterinario;
+import com.leo.vetfind.entity.Veterinario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

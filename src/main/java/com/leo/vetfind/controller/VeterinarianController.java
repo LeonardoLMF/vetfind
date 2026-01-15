@@ -1,4 +1,4 @@
-package com.leo.vetfind.controller.api;
+package com.leo.vetfind.controller;
 
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/veterinarios")
 @RequiredArgsConstructor
-public class VeterinarioController {
+public class VeterinarianController {
 
     private final VeterinarioServiceImpl veterinarioService;
 

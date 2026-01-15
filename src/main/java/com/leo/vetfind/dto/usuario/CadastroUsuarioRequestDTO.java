@@ -1,7 +1,7 @@
 package com.leo.vetfind.dto.usuario;
 
 
-import com.leo.vetfind.entity.TipoUsuario;
+import com.leo.vetfind.entity.UserType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -25,5 +25,5 @@ public class CadastroUsuarioRequestDTO {
     private String telefone;
 
     @NotNull(message = "O tipo do usuário é obrigatório")
-    private TipoUsuario tipoUsuario;
+    private UserType userType;
 }

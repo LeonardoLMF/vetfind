@@ -3,7 +3,7 @@ package com.leo.vetfind.service.usuario;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
 import com.leo.vetfind.dto.usuario.UpdateUsuarioRequestDTO;
-import com.leo.vetfind.entity.usuario.Usuario;
+import com.leo.vetfind.entity.Usuario;
 import com.leo.vetfind.exception.EmailJaCadastradoException;
 import com.leo.vetfind.exception.UsuarioNotFoundException;
 import com.leo.vetfind.exception.UsuarioPossuiVeterinarioException;

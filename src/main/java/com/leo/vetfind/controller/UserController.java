@@ -1,4 +1,4 @@
-package com.leo.vetfind.controller.api;
+package com.leo.vetfind.controller;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
-public class UsuarioController {
+public class UserController {
 
     private final UsuarioService usuarioService;
 

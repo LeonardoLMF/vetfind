@@ -2,8 +2,8 @@ package com.leo.vetfind.service.usuario;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
-import com.leo.vetfind.entity.usuario.Usuario;
-import com.leo.vetfind.entity.veterinario.Veterinario;
+import com.leo.vetfind.entity.Usuario;
+import com.leo.vetfind.entity.Veterinario;
 import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.UsuarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
