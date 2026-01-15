@@ -1,4 +1,4 @@
-package com.leo.vetfind.dto.usuario;
+package com.leo.vetfind.dto.user;
 
 import lombok.*;
 
@@ -7,11 +7,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CadastroUsuarioResponseDTO {
+public class UserResponse {
     //não passar a senha pois é sensivel
 
     private Long id;
     private String email;
-    private String telefone;
-    private String tipoUsuario;
+    private String phone;
+    private String userType;
 }

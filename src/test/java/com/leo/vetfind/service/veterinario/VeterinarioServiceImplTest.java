@@ -1,8 +1,8 @@
 package com.leo.vetfind.service.veterinario;
 
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
+import com.leo.vetfind.dto.veterinarian.CreateVeterinarianRequest;
+import com.leo.vetfind.dto.veterinarian.VeterinarianResponse;
+import com.leo.vetfind.dto.veterinarian.UpdateVeterinarianRequest;
 import com.leo.vetfind.entity.User;
 import com.leo.vetfind.entity.UserType;
 import com.leo.vetfind.entity.Veterinarian;
@@ -37,7 +37,7 @@ public class VeterinarioServiceImplTest {
     @Test
     void CriarVeterinarioComSucesso() {
         //giv
-        CadastroVeterinarioRequestDTO request = new CadastroVeterinarioRequestDTO(
+        CreateVeterinarianRequest request = new CreateVeterinarianRequest(
                 "CRMV123",
                 1L
         );
@@ -53,8 +53,8 @@ public class VeterinarioServiceImplTest {
                 .usuario(usuario)
                 .build();
 
-        CadastroVeterinarioResponseDTO responseEsperado =
-                new CadastroVeterinarioResponseDTO(
+        VeterinarianResponse responseEsperado =
+                new VeterinarianResponse(
                         10L,
                         "CRMV123",
                         1L
@@ -73,7 +73,7 @@ public class VeterinarioServiceImplTest {
                 .thenReturn(responseEsperado);
 
         //wh
-        CadastroVeterinarioResponseDTO resultado =
+        VeterinarianResponse resultado =
                 veterinarioService.criarVeterinario(request);
 
         //th
@@ -93,7 +93,7 @@ public class VeterinarioServiceImplTest {
     void LancarExcecaoQuandoCrmvJaEstiverCadastrado() {
 
         // arrange
-        CadastroVeterinarioRequestDTO dto = CadastroVeterinarioRequestDTO.builder()
+        CreateVeterinarianRequest dto = CreateVeterinarianRequest.builder()
                 .crmv("CRMV123")
                 .usuarioId(1L)
                 .build();
@@ -115,7 +115,7 @@ public class VeterinarioServiceImplTest {
     @Test
     void LancarExcecaoQuandoUsuarioNaoExistir() {
 
-        CadastroVeterinarioRequestDTO dto = CadastroVeterinarioRequestDTO.builder()
+        CreateVeterinarianRequest dto = CreateVeterinarianRequest.builder()
                 .crmv("CRMV123")
                 .usuarioId(99L)
                 .build();
@@ -149,9 +149,9 @@ public class VeterinarioServiceImplTest {
                 .thenReturn(Optional.of(veterinario));
 
         when(veterinarioMapper.toResponseDTO(veterinario))
-                .thenReturn(new CadastroVeterinarioResponseDTO(10L, "CRMV123", 1L));
+                .thenReturn(new VeterinarianResponse(10L, "CRMV123", 1L));
 
-        CadastroVeterinarioResponseDTO resultado =
+        VeterinarianResponse resultado =
                 veterinarioService.getById(10L);
 
         assertNotNull(resultado);
@@ -178,12 +178,12 @@ public class VeterinarioServiceImplTest {
                 .thenReturn(List.of(vet1, vet2));
 
         when(veterinarioMapper.toResponseDTO(vet1))
-                .thenReturn(new CadastroVeterinarioResponseDTO(1L, "CRMV1", 10L));
+                .thenReturn(new VeterinarianResponse(1L, "CRMV1", 10L));
 
         when(veterinarioMapper.toResponseDTO(vet2))
-                .thenReturn(new CadastroVeterinarioResponseDTO(2L, "CRMV2", 20L));
+                .thenReturn(new VeterinarianResponse(2L, "CRMV2", 20L));
 
-        List<CadastroVeterinarioResponseDTO> resultado = veterinarioService.getAll();
+        List<VeterinarianResponse> resultado = veterinarioService.getAll();
 
         assertEquals(2, resultado.size());
     }
@@ -193,8 +193,8 @@ public class VeterinarioServiceImplTest {
 
         Long veterinarioId = 10L;
 
-        UpdateVeterinarioRequestDTO dto =
-                new UpdateVeterinarioRequestDTO("CRMV999");
+        UpdateVeterinarianRequest dto =
+                new UpdateVeterinarianRequest("CRMV999");
 
         Veterinarian veterinarioExistente = Veterinarian.builder()
                 .id(veterinarioId)
@@ -206,8 +206,8 @@ public class VeterinarioServiceImplTest {
                 .crmv("CRMV999")
                 .build();
 
-        CadastroVeterinarioResponseDTO responseDTO =
-                new CadastroVeterinarioResponseDTO(10L, "CRMV999", null);
+        VeterinarianResponse responseDTO =
+                new VeterinarianResponse(10L, "CRMV999", null);
 
         when(veterinarioRepository.findById(veterinarioId))
                 .thenReturn(Optional.of(veterinarioExistente));
@@ -218,7 +218,7 @@ public class VeterinarioServiceImplTest {
         when(veterinarioMapper.toResponseDTO(veterinarioAtualizado))
                 .thenReturn(responseDTO);
 
-        CadastroVeterinarioResponseDTO resultado =
+        VeterinarianResponse resultado =
                 veterinarioService.atualizar(veterinarioId, dto);
 
         assertNotNull(resultado);
@@ -240,7 +240,7 @@ public class VeterinarioServiceImplTest {
     @Test
     void LancarExcecaoQuandoUsuarioNaoForVeterinario() {
 
-        CadastroVeterinarioRequestDTO dto = CadastroVeterinarioRequestDTO.builder()
+        CreateVeterinarianRequest dto = CreateVeterinarianRequest.builder()
                 .crmv("CRMV123")
                 .usuarioId(1L)
                 .build();
@@ -269,7 +269,7 @@ public class VeterinarioServiceImplTest {
     @Test
     void LancarExcecaoQuandoUsuarioJaPossuirVeterinario() {
 
-        CadastroVeterinarioRequestDTO dto = CadastroVeterinarioRequestDTO.builder()
+        CreateVeterinarianRequest dto = CreateVeterinarianRequest.builder()
                 .crmv("CRMV123")
                 .usuarioId(1L)
                 .build();

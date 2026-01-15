@@ -1,4 +1,4 @@
-package com.leo.vetfind.dto.veterinario;
+package com.leo.vetfind.dto.veterinarian;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -8,9 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UpdateVeterinarioRequestDTO {
+public class UpdateVeterinarianRequest {
 
-    @NotBlank(message = "O CRMV é obrigatório")
+    @NotBlank(message = "CRMV is required")
     private String crmv;
 
 }

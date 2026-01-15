@@ -1,21 +1,20 @@
 package com.leo.vetfind.service.usuario;
 
-import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
-import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
-import com.leo.vetfind.dto.usuario.UpdateUsuarioRequestDTO;
-import org.mapstruct.Mapper;
+import com.leo.vetfind.dto.user.CreateUserRequest;
+import com.leo.vetfind.dto.user.UserResponse;
+import com.leo.vetfind.dto.user.UpdateUserRequest;
 
 import java.util.List;
 
 public interface UsuarioService {
 
-    CadastroUsuarioResponseDTO criarUsuario(CadastroUsuarioRequestDTO dto);
+    UserResponse criarUsuario(CreateUserRequest dto);
 
-    List<CadastroUsuarioResponseDTO> listarUsuarios();
+    List<UserResponse> listarUsuarios();
 
-    CadastroUsuarioResponseDTO buscarUsuarioPorId(Long id);
+    UserResponse buscarUsuarioPorId(Long id);
 
-    CadastroUsuarioResponseDTO atualizar(Long id, UpdateUsuarioRequestDTO dto);
+    UserResponse atualizar(Long id, UpdateUserRequest dto);
 
     void deletarUsuario(Long id);
 }

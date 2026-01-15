@@ -1,8 +1,8 @@
 package com.leo.vetfind.controller;
 
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
+import com.leo.vetfind.dto.veterinarian.CreateVeterinarianRequest;
+import com.leo.vetfind.dto.veterinarian.VeterinarianResponse;
+import com.leo.vetfind.dto.veterinarian.UpdateVeterinarianRequest;
 import com.leo.vetfind.service.veterinario.VeterinarioServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,25 +19,25 @@ public class VeterinarianController {
     private final VeterinarioServiceImpl veterinarioService;
 
     @PostMapping
-    public ResponseEntity<CadastroVeterinarioResponseDTO> criarVeterinario(@Valid @RequestBody CadastroVeterinarioRequestDTO dto) {
-        CadastroVeterinarioResponseDTO response = veterinarioService.criarVeterinario(dto);
+    public ResponseEntity<VeterinarianResponse> criarVeterinario(@Valid @RequestBody CreateVeterinarianRequest dto) {
+        VeterinarianResponse response = veterinarioService.criarVeterinario(dto);
             return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<CadastroVeterinarioResponseDTO>> getAll() {
+    public ResponseEntity<List<VeterinarianResponse>> getAll() {
             return ResponseEntity.ok(veterinarioService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CadastroVeterinarioResponseDTO> getById(@PathVariable Long id) {
-        CadastroVeterinarioResponseDTO response = veterinarioService.getById(id);
+    public ResponseEntity<VeterinarianResponse> getById(@PathVariable Long id) {
+        VeterinarianResponse response = veterinarioService.getById(id);
             return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CadastroVeterinarioResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody UpdateVeterinarioRequestDTO dto) {
-        CadastroVeterinarioResponseDTO response =
+    public ResponseEntity<VeterinarianResponse> atualizar(@PathVariable Long id, @Valid @RequestBody UpdateVeterinarianRequest dto) {
+        VeterinarianResponse response =
                 veterinarioService.atualizar(id, dto);
 
         return ResponseEntity.ok(response);

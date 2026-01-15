@@ -1,8 +1,8 @@
 package com.leo.vetfind.service.veterinario;
 
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
+import com.leo.vetfind.dto.veterinarian.CreateVeterinarianRequest;
+import com.leo.vetfind.dto.veterinarian.VeterinarianResponse;
+import com.leo.vetfind.dto.veterinarian.UpdateVeterinarianRequest;
 import com.leo.vetfind.entity.User;
 import com.leo.vetfind.entity.UserType;
 import com.leo.vetfind.entity.Veterinarian;
@@ -24,7 +24,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     private final VeterinarioMapper veterinarioMapper;
 
     @Override
-    public CadastroVeterinarioResponseDTO criarVeterinario(CadastroVeterinarioRequestDTO dto) {
+    public VeterinarianResponse criarVeterinario(CreateVeterinarianRequest dto) {
 
         // verifica se ja existe alg registrado com a crmv
         if (veterinarioRepository.existsByCrmv(dto.getCrmv())) {
@@ -59,7 +59,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     }
 
     @Override
-    public CadastroVeterinarioResponseDTO getById(Long id) {
+    public VeterinarianResponse getById(Long id) {
         Veterinarian veterinario = veterinarioRepository.findById(id)
                 .orElseThrow(() -> new VeterinarioNotFoundException(id));
 
@@ -67,7 +67,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     }
 
     @Override
-    public List<CadastroVeterinarioResponseDTO> getAll() {
+    public List<VeterinarianResponse> getAll() {
         return veterinarioRepository
                 .findByUsuario_TipoUsuario(UserType.VETERINARIO)
                 .stream()
@@ -76,7 +76,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     }
 
     @Override
-    public CadastroVeterinarioResponseDTO atualizar(Long id, UpdateVeterinarioRequestDTO dto) {
+    public VeterinarianResponse atualizar(Long id, UpdateVeterinarianRequest dto) {
 
         Veterinarian veterinario = veterinarioRepository.findById(id)
                 .orElseThrow(() -> new VeterinarioNotFoundException(id));

@@ -1,8 +1,8 @@
 package com.leo.vetfind.service.usuario;
 
-import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
-import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
-import com.leo.vetfind.dto.usuario.UpdateUsuarioRequestDTO;
+import com.leo.vetfind.dto.user.CreateUserRequest;
+import com.leo.vetfind.dto.user.UserResponse;
+import com.leo.vetfind.dto.user.UpdateUserRequest;
 import com.leo.vetfind.entity.User;
 import com.leo.vetfind.exception.EmailJaCadastradoException;
 import com.leo.vetfind.exception.UsuarioNotFoundException;
@@ -21,7 +21,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
 
-    public CadastroUsuarioResponseDTO criarUsuario(CadastroUsuarioRequestDTO dto) {
+    public UserResponse criarUsuario(CreateUserRequest dto) {
         // Garantir que o email seja unico
         if (usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new EmailJaCadastradoException();
@@ -35,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     // busca todos os usuarios (get all)
     @Override
-    public List<CadastroUsuarioResponseDTO> listarUsuarios() {
+    public List<UserResponse> listarUsuarios() {
         return usuarioRepository.findAll()
                 .stream()
                 .map(usuarioMapper::toResponseDTO)
@@ -44,14 +44,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     // busca um usuario com ID especifico (get by id)
     @Override
-    public CadastroUsuarioResponseDTO buscarUsuarioPorId(Long id) {
+    public UserResponse buscarUsuarioPorId(Long id) {
         User usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
         return usuarioMapper.toResponseDTO(usuario);
     }
 
     @Override
-    public CadastroUsuarioResponseDTO atualizar(Long id, UpdateUsuarioRequestDTO dto) {
+    public UserResponse atualizar(Long id, UpdateUserRequest dto) {
 
         User usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));

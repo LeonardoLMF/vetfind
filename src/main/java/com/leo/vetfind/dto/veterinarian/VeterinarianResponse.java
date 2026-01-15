@@ -1,4 +1,4 @@
-package com.leo.vetfind.dto.veterinario;
+package com.leo.vetfind.dto.veterinarian;
 
 import lombok.*;
 
@@ -7,10 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CadastroVeterinarioResponseDTO {
+public class VeterinarianResponse {
 
     private Long id;
     private String crmv;
-    private Long usuarioId;
+    private Long userId;
 
 }

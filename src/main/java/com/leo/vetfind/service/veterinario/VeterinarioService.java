@@ -1,21 +1,20 @@
 package com.leo.vetfind.service.veterinario;
 
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
-import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
-import org.mapstruct.Mapper;
+import com.leo.vetfind.dto.veterinarian.CreateVeterinarianRequest;
+import com.leo.vetfind.dto.veterinarian.VeterinarianResponse;
+import com.leo.vetfind.dto.veterinarian.UpdateVeterinarianRequest;
 
 import java.util.List;
 
 public interface VeterinarioService {
 
-    CadastroVeterinarioResponseDTO criarVeterinario(CadastroVeterinarioRequestDTO dto);
+    VeterinarianResponse criarVeterinario(CreateVeterinarianRequest dto);
 
-    CadastroVeterinarioResponseDTO getById(Long id);
+    VeterinarianResponse getById(Long id);
 
-    List<CadastroVeterinarioResponseDTO> getAll();
+    List<VeterinarianResponse> getAll();
 
-    CadastroVeterinarioResponseDTO atualizar(Long id, UpdateVeterinarioRequestDTO dto);
+    VeterinarianResponse atualizar(Long id, UpdateVeterinarianRequest dto);
 
     void deletar (Long id);
 }

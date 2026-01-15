@@ -1,7 +1,7 @@
 package com.leo.vetfind.service.usuario;
 
-import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
-import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
+import com.leo.vetfind.dto.user.CreateUserRequest;
+import com.leo.vetfind.dto.user.UserResponse;
 import com.leo.vetfind.entity.User;
 import com.leo.vetfind.entity.Veterinarian;
 import com.leo.vetfind.exception.*;
@@ -34,8 +34,8 @@ public class UsuarioServiceImplTest {
     @Test
     void CriarUsuarioComSucesso() {
 
-        CadastroUsuarioRequestDTO request =
-                CadastroUsuarioRequestDTO.builder()
+        CreateUserRequest request =
+                CreateUserRequest.builder()
                         .email("teste@email.com")
                         .build();
 
@@ -44,8 +44,8 @@ public class UsuarioServiceImplTest {
                 .email("teste@email.com")
                 .build();
 
-        CadastroUsuarioResponseDTO response =
-                CadastroUsuarioResponseDTO.builder()
+        UserResponse response =
+                UserResponse.builder()
                         .id(1L)
                         .email("teste@email.com")
                         .build();
@@ -62,7 +62,7 @@ public class UsuarioServiceImplTest {
         when(usuarioMapper.toResponseDTO(usuario))
                 .thenReturn(response);
 
-        CadastroUsuarioResponseDTO resultado =
+        UserResponse resultado =
                 usuarioService.criarUsuario(request);
 
         assertNotNull(resultado);
@@ -75,8 +75,8 @@ public class UsuarioServiceImplTest {
     @Test
     void LancarExcecaoQuandoEmailJaCadastrado() {
 
-        CadastroUsuarioRequestDTO request =
-                CadastroUsuarioRequestDTO.builder()
+        CreateUserRequest request =
+                CreateUserRequest.builder()
                         .email("teste@email.com")
                         .build();
 
@@ -102,13 +102,13 @@ public class UsuarioServiceImplTest {
 
         when(usuarioMapper.toResponseDTO(usuario))
                 .thenReturn(
-                        CadastroUsuarioResponseDTO.builder()
+                        UserResponse.builder()
                                 .id(1L)
                                 .email("teste@email.com")
                                 .build()
                 );
 
-        CadastroUsuarioResponseDTO resultado =
+        UserResponse resultado =
                 usuarioService.buscarUsuarioPorId(1L);
 
         assertNotNull(resultado);
