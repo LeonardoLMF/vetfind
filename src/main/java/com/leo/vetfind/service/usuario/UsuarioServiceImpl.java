@@ -3,7 +3,7 @@ package com.leo.vetfind.service.usuario;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
 import com.leo.vetfind.dto.usuario.UpdateUsuarioRequestDTO;
-import com.leo.vetfind.entity.Usuario;
+import com.leo.vetfind.entity.User;
 import com.leo.vetfind.exception.EmailJaCadastradoException;
 import com.leo.vetfind.exception.UsuarioNotFoundException;
 import com.leo.vetfind.exception.UsuarioPossuiVeterinarioException;
@@ -28,8 +28,8 @@ public class UsuarioServiceImpl implements UsuarioService{
         }
 
         // cria um usuario e persiste o mesmo
-        Usuario usuario = usuarioMapper.toEntity(dto);
-        Usuario salvo = usuarioRepository.save(usuario);
+        User usuario = usuarioMapper.toEntity(dto);
+        User salvo = usuarioRepository.save(usuario);
         return usuarioMapper.toResponseDTO(salvo);
     }
 
@@ -45,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     // busca um usuario com ID especifico (get by id)
     @Override
     public CadastroUsuarioResponseDTO buscarUsuarioPorId(Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
+        User usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
         return usuarioMapper.toResponseDTO(usuario);
     }
@@ -53,7 +53,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public CadastroUsuarioResponseDTO atualizar(Long id, UpdateUsuarioRequestDTO dto) {
 
-        Usuario usuario = usuarioRepository.findById(id)
+        User usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
 
         // email não pode ser duplicado
@@ -67,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuario.setTelefone(dto.getTelefone());
         usuario.setSenha(dto.getSenha());
 
-        Usuario atualizado = usuarioRepository.save(usuario);
+        User atualizado = usuarioRepository.save(usuario);
 
         return usuarioMapper.toResponseDTO(atualizado);
     }
@@ -75,7 +75,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public void deletarUsuario(Long id) {
 
-        Usuario usuario = usuarioRepository.findById(id)
+        User usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
 
         if (usuario.getVeterinario() != null) {

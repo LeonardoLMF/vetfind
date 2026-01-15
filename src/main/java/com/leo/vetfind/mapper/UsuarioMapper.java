@@ -2,7 +2,7 @@ package com.leo.vetfind.mapper;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
-import com.leo.vetfind.entity.Usuario;
+import com.leo.vetfind.entity.User;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -11,12 +11,12 @@ import java.util.List;
 public interface UsuarioMapper {
 
     // dto > entity
-    Usuario toEntity(CadastroUsuarioRequestDTO dto);
+    User toEntity(CadastroUsuarioRequestDTO dto);
 
 
     //entity > dto
-    CadastroUsuarioResponseDTO toResponseDTO(Usuario usuario);
+    CadastroUsuarioResponseDTO toResponseDTO(User usuario);
 
     //lista
-    List<CadastroUsuarioResponseDTO> toResponseDTOList (List<Usuario> usuarios);
+    List<CadastroUsuarioResponseDTO> toResponseDTOList (List<User> usuarios);
 }

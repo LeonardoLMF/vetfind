@@ -1,7 +1,7 @@
 package com.leo.vetfind.mapper;
 
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
-import com.leo.vetfind.entity.Veterinario;
+import com.leo.vetfind.entity.Veterinarian;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,8 +12,8 @@ public interface VeterinarioMapper {
 
     // entity > dto
     @Mapping(source = "usuario.id", target = "usuarioId")
-    CadastroVeterinarioResponseDTO toResponseDTO(Veterinario veterinario);
+    CadastroVeterinarioResponseDTO toResponseDTO(Veterinarian veterinario);
 
     // Lista
-    List<CadastroVeterinarioResponseDTO> toResponseDTOList(List<Veterinario> veterinarios);
+    List<CadastroVeterinarioResponseDTO> toResponseDTOList(List<Veterinarian> veterinarios);
 }

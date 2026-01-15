@@ -2,8 +2,8 @@ package com.leo.vetfind.service.usuario;
 
 import com.leo.vetfind.dto.usuario.CadastroUsuarioRequestDTO;
 import com.leo.vetfind.dto.usuario.CadastroUsuarioResponseDTO;
-import com.leo.vetfind.entity.Usuario;
-import com.leo.vetfind.entity.Veterinario;
+import com.leo.vetfind.entity.User;
+import com.leo.vetfind.entity.Veterinarian;
 import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.UsuarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
@@ -39,7 +39,7 @@ public class UsuarioServiceImplTest {
                         .email("teste@email.com")
                         .build();
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
                 .email("teste@email.com")
                 .build();
@@ -92,7 +92,7 @@ public class UsuarioServiceImplTest {
     @Test
     void BuscarUsuarioPorIdComSucesso() {
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
                 .email("teste@email.com")
                 .build();
@@ -128,7 +128,7 @@ public class UsuarioServiceImplTest {
     @Test
     void DeletarUsuarioComSucesso() {
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
                 .build();
 
@@ -143,9 +143,9 @@ public class UsuarioServiceImplTest {
     @Test
     void LancarExcecaoAoDeletarUsuarioComVeterinario() {
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
-                .veterinario(new Veterinario())
+                .veterinario(new Veterinarian())
                 .build();
 
         when(usuarioRepository.findById(1L))

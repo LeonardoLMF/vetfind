@@ -3,9 +3,9 @@ package com.leo.vetfind.service.veterinario;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
 import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
+import com.leo.vetfind.entity.User;
 import com.leo.vetfind.entity.UserType;
-import com.leo.vetfind.entity.Usuario;
-import com.leo.vetfind.entity.Veterinario;
+import com.leo.vetfind.entity.Veterinarian;
 import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.VeterinarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
@@ -32,7 +32,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
         }
 
         // verifica se o usuario existe
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+        User usuario = usuarioRepository.findById(dto.getUsuarioId())
                 .orElseThrow(() -> new UsuarioNotFoundException(dto.getUsuarioId()));
 
         // verifica se o tipo do usuario é diferente de VETERINARIO
@@ -46,13 +46,13 @@ public class VeterinarioServiceImpl implements VeterinarioService{
         }
 
         //cria uma entidade veterinario
-        Veterinario veterinario = Veterinario.builder()
+        Veterinarian veterinario = Veterinarian.builder()
                 .crmv(dto.getCrmv())
                 .usuario(usuario)
                 .build();
 
         // persiste
-        Veterinario salvo = veterinarioRepository.save(veterinario);
+        Veterinarian salvo = veterinarioRepository.save(veterinario);
 
         return veterinarioMapper.toResponseDTO(salvo);
 
@@ -60,7 +60,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
 
     @Override
     public CadastroVeterinarioResponseDTO getById(Long id) {
-        Veterinario veterinario = veterinarioRepository.findById(id)
+        Veterinarian veterinario = veterinarioRepository.findById(id)
                 .orElseThrow(() -> new VeterinarioNotFoundException(id));
 
         return veterinarioMapper.toResponseDTO(veterinario);
@@ -78,7 +78,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     @Override
     public CadastroVeterinarioResponseDTO atualizar(Long id, UpdateVeterinarioRequestDTO dto) {
 
-        Veterinario veterinario = veterinarioRepository.findById(id)
+        Veterinarian veterinario = veterinarioRepository.findById(id)
                 .orElseThrow(() -> new VeterinarioNotFoundException(id));
 
         if (!veterinario.getCrmv().equals(dto.getCrmv())
@@ -88,7 +88,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
 
         veterinario.setCrmv(dto.getCrmv());
 
-        Veterinario atualizado = veterinarioRepository.save(veterinario);
+        Veterinarian atualizado = veterinarioRepository.save(veterinario);
 
         return veterinarioMapper.toResponseDTO(atualizado);
     }
@@ -96,10 +96,10 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     @Override
     public void deletar(Long id) {
 
-        Veterinario veterinario = veterinarioRepository.findById(id)
+        Veterinarian veterinario = veterinarioRepository.findById(id)
                 .orElseThrow(() -> new VeterinarioNotFoundException(id));
 
-        Usuario usuario = veterinario.getUsuario();
+        User usuario = veterinario.getUsuario();
         usuario.setVeterinario(null);
 
         veterinarioRepository.delete(veterinario);

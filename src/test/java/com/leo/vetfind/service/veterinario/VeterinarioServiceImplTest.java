@@ -3,9 +3,9 @@ package com.leo.vetfind.service.veterinario;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioRequestDTO;
 import com.leo.vetfind.dto.veterinario.CadastroVeterinarioResponseDTO;
 import com.leo.vetfind.dto.veterinario.UpdateVeterinarioRequestDTO;
+import com.leo.vetfind.entity.User;
 import com.leo.vetfind.entity.UserType;
-import com.leo.vetfind.entity.Usuario;
-import com.leo.vetfind.entity.Veterinario;
+import com.leo.vetfind.entity.Veterinarian;
 import com.leo.vetfind.exception.*;
 import com.leo.vetfind.mapper.VeterinarioMapper;
 import com.leo.vetfind.repository.UsuarioRepository;
@@ -42,12 +42,12 @@ public class VeterinarioServiceImplTest {
                 1L
         );
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
                 .userType(UserType.VETERINARIO)
                 .build();
 
-        Veterinario veterinario = Veterinario.builder()
+        Veterinarian veterinario = Veterinarian.builder()
                 .id(10L)
                 .crmv("CRMV123")
                 .usuario(usuario)
@@ -66,7 +66,7 @@ public class VeterinarioServiceImplTest {
         when(usuarioRepository.findById(1L))
                 .thenReturn(java.util.Optional.of(usuario));
 
-        when(veterinarioRepository.save(any(Veterinario.class)))
+        when(veterinarioRepository.save(any(Veterinarian.class)))
                 .thenReturn(veterinario);
 
         when(veterinarioMapper.toResponseDTO(veterinario))
@@ -84,7 +84,7 @@ public class VeterinarioServiceImplTest {
 
         verify(veterinarioRepository).existsByCrmv("CRMV123");
         verify(usuarioRepository).findById(1L);
-        verify(veterinarioRepository).save(any(Veterinario.class));
+        verify(veterinarioRepository).save(any(Veterinarian.class));
         verify(veterinarioMapper).toResponseDTO(veterinario);
 
     }
@@ -132,17 +132,17 @@ public class VeterinarioServiceImplTest {
                         veterinarioService.criarVeterinario(dto)
                 );
 
-        assertEquals("Usuario com o ID 99 não encontrado", exception.getMessage());
+        assertEquals("User com o ID 99 não encontrado", exception.getMessage());
 
         verify(veterinarioRepository, never()).save(any());
     }
 
     @Test
     void BuscarVeterinarioPorIdComSucesso() {
-        Veterinario veterinario = Veterinario.builder()
+        Veterinarian veterinario = Veterinarian.builder()
                 .id(10L)
                 .crmv("CRMV123")
-                .usuario(Usuario.builder().id(1L).build())
+                .usuario(User.builder().id(1L).build())
                 .build();
 
         when(veterinarioRepository.findById(10L))
@@ -162,16 +162,16 @@ public class VeterinarioServiceImplTest {
 
     @Test
     void ListarTodosVeterinarios() {
-        Veterinario vet1 = Veterinario.builder()
+        Veterinarian vet1 = Veterinarian.builder()
                 .id(1L)
                 .crmv("CRMV1")
-                .usuario(Usuario.builder().id(10L).build())
+                .usuario(User.builder().id(10L).build())
                 .build();
 
-        Veterinario vet2 = Veterinario.builder()
+        Veterinarian vet2 = Veterinarian.builder()
                 .id(2L)
                 .crmv("CRMV2")
-                .usuario(Usuario.builder().id(20L).build())
+                .usuario(User.builder().id(20L).build())
                 .build();
 
         when(veterinarioRepository.findByUsuario_TipoUsuario(UserType.VETERINARIO))
@@ -196,12 +196,12 @@ public class VeterinarioServiceImplTest {
         UpdateVeterinarioRequestDTO dto =
                 new UpdateVeterinarioRequestDTO("CRMV999");
 
-        Veterinario veterinarioExistente = Veterinario.builder()
+        Veterinarian veterinarioExistente = Veterinarian.builder()
                 .id(veterinarioId)
                 .crmv("CRMV123")
                 .build();
 
-        Veterinario veterinarioAtualizado = Veterinario.builder()
+        Veterinarian veterinarioAtualizado = Veterinarian.builder()
                 .id(veterinarioId)
                 .crmv("CRMV999")
                 .build();
@@ -212,7 +212,7 @@ public class VeterinarioServiceImplTest {
         when(veterinarioRepository.findById(veterinarioId))
                 .thenReturn(Optional.of(veterinarioExistente));
 
-        when(veterinarioRepository.save(any(Veterinario.class)))
+        when(veterinarioRepository.save(any(Veterinarian.class)))
                 .thenReturn(veterinarioAtualizado);
 
         when(veterinarioMapper.toResponseDTO(veterinarioAtualizado))
@@ -225,7 +225,7 @@ public class VeterinarioServiceImplTest {
         assertEquals("CRMV999", resultado.getCrmv());
 
         verify(veterinarioRepository).findById(veterinarioId);
-        verify(veterinarioRepository).save(any(Veterinario.class));
+        verify(veterinarioRepository).save(any(Veterinarian.class));
     }
 
     @Test
@@ -245,7 +245,7 @@ public class VeterinarioServiceImplTest {
                 .usuarioId(1L)
                 .build();
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
                 .userType(UserType.PROPRIETARIO) // NÃO é veterinário
                 .build();
@@ -261,7 +261,7 @@ public class VeterinarioServiceImplTest {
                         veterinarioService.criarVeterinario(dto)
                 );
 
-        assertEquals("Usuario não é do tipo VETERINARIO", exception.getMessage());
+        assertEquals("User não é do tipo VETERINARIO", exception.getMessage());
 
         verify(veterinarioRepository, never()).save(any());
     }
@@ -274,10 +274,10 @@ public class VeterinarioServiceImplTest {
                 .usuarioId(1L)
                 .build();
 
-        Usuario usuario = Usuario.builder()
+        User usuario = User.builder()
                 .id(1L)
                 .userType(UserType.VETERINARIO)
-                .veterinario(Veterinario.builder().id(10L).build())
+                .veterinario(Veterinarian.builder().id(10L).build())
                 .build();
 
         when(veterinarioRepository.existsByCrmv("CRMV123"))

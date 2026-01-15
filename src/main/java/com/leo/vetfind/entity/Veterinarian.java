@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Veterinario {
+public class Veterinarian {
 
     /*acredito q seja melhor eu utilizar o mesmo Id para usuarios e veterinarios
       e ao inves de criar um ID unico para veterinarios, eu vejo qual o tipo do usuario */
@@ -24,5 +24,5 @@ public class Veterinario {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId //pega o mesmo id do usuario
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private User user;
 }
