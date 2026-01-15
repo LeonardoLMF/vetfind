@@ -28,21 +28,21 @@ public class VeterinarioServiceImpl implements VeterinarioService{
 
         // verifica se ja existe alg registrado com a crmv
         if (veterinarianRepository.existsByCrmv(dto.getCrmv())) {
-            throw new CrmvCadastradoException();
+            throw new CrmvAlreadyExistsException();
         }
 
         // verifica se o usuario existe
         User usuario = userRepository.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new UsuarioNotFoundException(dto.getUsuarioId()));
+                .orElseThrow(() -> new UserNotFoundException(dto.getUsuarioId()));
 
         // verifica se o tipo do usuario é diferente de VETERINARIO
         if (usuario.getTipoUsuario() != UserType.VETERINARIO) {
-            throw new TipoUsuarioInvalidoException();
+            throw new InvalidUserTypeException();
         }
 
         // verifica se o usuario ja possui cadastro
         if (usuario.getVeterinario() != null) {
-            throw new VeterinarioJaVinculadoException();
+            throw new UserAlreadyVeterinarianException();
         }
 
         //cria uma entidade veterinario
@@ -61,7 +61,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     @Override
     public VeterinarianResponse getById(Long id) {
         Veterinarian veterinario = veterinarianRepository.findById(id)
-                .orElseThrow(() -> new VeterinarioNotFoundException(id));
+                .orElseThrow(() -> new VeterinarianNotFoundException(id));
 
         return veterinarianMapper.toResponseDTO(veterinario);
     }
@@ -79,11 +79,11 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     public VeterinarianResponse atualizar(Long id, UpdateVeterinarianRequest dto) {
 
         Veterinarian veterinario = veterinarianRepository.findById(id)
-                .orElseThrow(() -> new VeterinarioNotFoundException(id));
+                .orElseThrow(() -> new VeterinarianNotFoundException(id));
 
         if (!veterinario.getCrmv().equals(dto.getCrmv())
                 && veterinarianRepository.existsByCrmv(dto.getCrmv())) {
-            throw new CrmvCadastradoException();
+            throw new CrmvAlreadyExistsException();
         }
 
         veterinario.setCrmv(dto.getCrmv());
@@ -97,7 +97,7 @@ public class VeterinarioServiceImpl implements VeterinarioService{
     public void deletar(Long id) {
 
         Veterinarian veterinario = veterinarianRepository.findById(id)
-                .orElseThrow(() -> new VeterinarioNotFoundException(id));
+                .orElseThrow(() -> new VeterinarianNotFoundException(id));
 
         User usuario = veterinario.getUsuario();
         usuario.setVeterinario(null);

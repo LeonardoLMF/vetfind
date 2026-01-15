@@ -83,7 +83,7 @@ public class UsuarioServiceImplTest {
         when(userRepository.existsByEmail("teste@email.com"))
                 .thenReturn(true);
 
-        assertThrows(EmailJaCadastradoException.class,
+        assertThrows(EmailAlreadyExistsException.class,
                 () -> usuarioService.criarUsuario(request));
 
         verify(userRepository, never()).save(any());
@@ -121,7 +121,7 @@ public class UsuarioServiceImplTest {
         when(userRepository.findById(99L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(UsuarioNotFoundException.class,
+        assertThrows(UserNotFoundException.class,
                 () -> usuarioService.buscarUsuarioPorId(99L));
     }
 
@@ -151,7 +151,7 @@ public class UsuarioServiceImplTest {
         when(userRepository.findById(1L))
                 .thenReturn(Optional.of(usuario));
 
-        assertThrows(UsuarioPossuiVeterinarioException.class,
+        assertThrows(UserHasVeterinarianException.class,
                 () -> usuarioService.deletarUsuario(1L));
 
         verify(userRepository, never()).delete(any());

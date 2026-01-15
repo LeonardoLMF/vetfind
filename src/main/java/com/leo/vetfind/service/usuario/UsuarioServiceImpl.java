@@ -4,9 +4,9 @@ import com.leo.vetfind.dto.user.CreateUserRequest;
 import com.leo.vetfind.dto.user.UserResponse;
 import com.leo.vetfind.dto.user.UpdateUserRequest;
 import com.leo.vetfind.entity.User;
-import com.leo.vetfind.exception.EmailJaCadastradoException;
-import com.leo.vetfind.exception.UsuarioNotFoundException;
-import com.leo.vetfind.exception.UsuarioPossuiVeterinarioException;
+import com.leo.vetfind.exception.EmailAlreadyExistsException;
+import com.leo.vetfind.exception.UserNotFoundException;
+import com.leo.vetfind.exception.UserHasVeterinarianException;
 import com.leo.vetfind.mapper.UserMapper;
 import com.leo.vetfind.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public UserResponse criarUsuario(CreateUserRequest dto) {
         // Garantir que o email seja unico
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new EmailJaCadastradoException();
+            throw new EmailAlreadyExistsException();
         }
 
         // cria um usuario e persiste o mesmo
@@ -46,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public UserResponse buscarUsuarioPorId(Long id) {
         User usuario = userRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException(id));
+                .orElseThrow(() -> new UserNotFoundException(id));
         return userMapper.toResponseDTO(usuario);
     }
 
@@ -54,12 +54,12 @@ public class UsuarioServiceImpl implements UsuarioService{
     public UserResponse atualizar(Long id, UpdateUserRequest dto) {
 
         User usuario = userRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException(id));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         // email não pode ser duplicado
         if (!usuario.getEmail().equals(dto.getEmail())
                 && userRepository.existsByEmail(dto.getEmail())) {
-            throw new EmailJaCadastradoException();
+            throw new EmailAlreadyExistsException();
         }
 
         // atualiza     apenas campos permitidos
@@ -76,10 +76,10 @@ public class UsuarioServiceImpl implements UsuarioService{
     public void deletarUsuario(Long id) {
 
         User usuario = userRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException(id));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         if (usuario.getVeterinario() != null) {
-            throw new UsuarioPossuiVeterinarioException();
+            throw new UserHasVeterinarianException();
         }
 
         userRepository.delete(usuario);

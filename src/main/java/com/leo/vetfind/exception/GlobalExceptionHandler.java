@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         ApiErrorResponse error = new ApiErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Erro de regra de negócio",
+                "Business rule violation",
                 ex.getMessage(),
                 request.getRequestURI()
         );
@@ -29,14 +29,14 @@ public class GlobalExceptionHandler {
     }
 
     // Recurso nao encontrado
-    @ExceptionHandler({UsuarioNotFoundException.class, VeterinarioNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, VeterinarianNotFoundException.class})
     public ResponseEntity<ApiErrorResponse> handleNotFound(RuntimeException ex, HttpServletRequest request)
 
     {
         ApiErrorResponse erro = new ApiErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
-                "Recurso não encontrado",
+                "Resource not found",
                 ex.getMessage(),
                 request.getRequestURI()
         );
@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
         ApiErrorResponse erro = new ApiErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Erro interno do servidor",
-                "Ocorreu um erro inesperado.",
+                "Internal server error",
+                "An unexpected error occurred.",
                 request.getRequestURI()
         );
 
@@ -67,12 +67,12 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(FieldError::getDefaultMessage)
                 .findFirst()
-                .orElse("Dados inválidos");
+                .orElse("Invalid data");
 
         ApiErrorResponse erro = new ApiErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Erro de validação",
+                "Validation error",
                 mensagem,
                 request.getRequestURI()
         );

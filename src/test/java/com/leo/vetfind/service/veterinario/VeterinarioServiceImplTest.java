@@ -102,8 +102,8 @@ public class VeterinarioServiceImplTest {
                 .thenReturn(true);
 
         // act + assert
-        CrmvCadastradoException exception =
-                assertThrows(CrmvCadastradoException.class, () ->
+        CrmvAlreadyExistsException exception =
+                assertThrows(CrmvAlreadyExistsException.class, () ->
                         veterinarioService.criarVeterinario(dto)
                 );
 
@@ -127,8 +127,8 @@ public class VeterinarioServiceImplTest {
                 .thenReturn(Optional.empty());
 
 
-        UsuarioNotFoundException exception =
-                assertThrows(UsuarioNotFoundException.class, () ->
+        UserNotFoundException exception =
+                assertThrows(UserNotFoundException.class, () ->
                         veterinarioService.criarVeterinario(dto)
                 );
 
@@ -233,7 +233,7 @@ public class VeterinarioServiceImplTest {
         when(veterinarianRepository.findById(99L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(VeterinarioNotFoundException.class,
+        assertThrows(VeterinarianNotFoundException.class,
                 () -> veterinarioService.deletar(99L));
     }
 
@@ -256,8 +256,8 @@ public class VeterinarioServiceImplTest {
         when(userRepository.findById(1L))
                 .thenReturn(Optional.of(usuario));
 
-        TipoUsuarioInvalidoException exception =
-                assertThrows(TipoUsuarioInvalidoException.class, () ->
+        InvalidUserTypeException exception =
+                assertThrows(InvalidUserTypeException.class, () ->
                         veterinarioService.criarVeterinario(dto)
                 );
 
@@ -286,8 +286,8 @@ public class VeterinarioServiceImplTest {
         when(userRepository.findById(1L))
                 .thenReturn(Optional.of(usuario));
 
-        VeterinarioJaVinculadoException exception =
-                assertThrows(VeterinarioJaVinculadoException.class, () ->
+        UserAlreadyVeterinarianException exception =
+                assertThrows(UserAlreadyVeterinarianException.class, () ->
                         veterinarioService.criarVeterinario(dto)
                 );
 
