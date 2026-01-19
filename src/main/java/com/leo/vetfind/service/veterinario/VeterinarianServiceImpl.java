@@ -11,6 +11,7 @@ import com.leo.vetfind.mapper.VeterinarianMapper;
 import com.leo.vetfind.repository.UserRepository;
 import com.leo.vetfind.repository.VeterinarianRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class VeterinarianServiceImpl implements VeterinarianService {
     @Override
     public List<VeterinarianResponse> findAllVeterinarians() {
         return veterinarianRepository
-                .findByUser_UserType(UserType.VETERINARIO)
+                .findByUser_UserType(UserType.VETERINARIO, Sort.by(Sort.Direction.ASC, "id"))
                 .stream()
                 .map(veterinarianMapper::toResponseDTO)
                 .toList();

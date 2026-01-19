@@ -10,6 +10,7 @@ import com.leo.vetfind.exception.UserHasVeterinarianException;
 import com.leo.vetfind.mapper.UserMapper;
 import com.leo.vetfind.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,10 +34,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.toResponseDTO(saved);
     }
 
-    // busca todos os usuarios (get all)
+    // busca todos os veterinarios odenados por id
     @Override
     public List<UserResponse> findAllUsers() {
-        return userRepository.findAll()
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"))
                 .stream()
                 .map(userMapper::toResponseDTO)
                 .toList();
