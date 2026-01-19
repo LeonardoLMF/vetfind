@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -174,7 +175,7 @@ public class VeterinarianServiceImplTest {
                 .user(User.builder().id(20L).build())
                 .build();
 
-        when(veterinarianRepository.findByUser_UserType(UserType.VETERINARIO))
+        when(veterinarianRepository.findByUser_UserType(UserType.VETERINARIO, Sort.by(Sort.Direction.ASC, "id")))
                 .thenReturn(List.of(vet1, vet2));
 
         when(veterinarianMapper.toResponseDTO(vet1))
