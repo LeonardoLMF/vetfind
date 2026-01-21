@@ -11,17 +11,23 @@ import com.leo.vetfind.mapper.UserMapper;
 import com.leo.vetfind.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
+    @Override
+    @Transactional
     public UserResponse createUser(CreateUserRequest dto) {
         // Garantir que o email seja unico
         if (userRepository.existsByEmail(dto.getEmail())) {
@@ -30,6 +36,7 @@ public class UserServiceImpl implements UserService {
 
         // cria um usuario e persiste o mesmo
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         User saved = userRepository.save(user);
         return userMapper.toResponseDTO(saved);
     }
@@ -52,6 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponse updateUser(Long id, UpdateUserRequest dto) {
 
         User user = userRepository.findById(id)
@@ -66,7 +74,7 @@ public class UserServiceImpl implements UserService {
         // atualiza     apenas campos permitidos
         user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         User updated = userRepository.save(user);
 
@@ -74,6 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
 
         User user = userRepository.findById(id)
