@@ -11,13 +11,17 @@ import com.leo.vetfind.mapper.VeterinarianMapper;
 import com.leo.vetfind.repository.UserRepository;
 import com.leo.vetfind.repository.VeterinarianRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Slf4j
 public class VeterinarianServiceImpl implements VeterinarianService {
 
     private final VeterinarianRepository veterinarianRepository;
@@ -25,6 +29,7 @@ public class VeterinarianServiceImpl implements VeterinarianService {
     private final VeterinarianMapper veterinarianMapper;
 
     @Override
+    @Transactional
     public VeterinarianResponse createVeterinarian(CreateVeterinarianRequest dto) {
 
         // verifica se ja existe alg registrado com a crmv
@@ -54,16 +59,13 @@ public class VeterinarianServiceImpl implements VeterinarianService {
 
         // persiste
         Veterinarian saved = veterinarianRepository.save(veterinarian);
-
         return veterinarianMapper.toResponseDTO(saved);
-
     }
 
     @Override
     public VeterinarianResponse findVeterinarianById(Long id) {
         Veterinarian veterinarian = veterinarianRepository.findById(id)
                 .orElseThrow(() -> new VeterinarianNotFoundException(id));
-
         return veterinarianMapper.toResponseDTO(veterinarian);
     }
 
@@ -77,6 +79,7 @@ public class VeterinarianServiceImpl implements VeterinarianService {
     }
 
     @Override
+    @Transactional
     public VeterinarianResponse updateVeterinarian(Long id, UpdateVeterinarianRequest dto) {
 
         Veterinarian veterinarian = veterinarianRepository.findById(id)
@@ -95,8 +98,8 @@ public class VeterinarianServiceImpl implements VeterinarianService {
     }
 
     @Override
+    @Transactional
     public void deleteVeterinarian(Long id) {
-
         Veterinarian veterinarian = veterinarianRepository.findById(id)
                 .orElseThrow(() -> new VeterinarianNotFoundException(id));
 
@@ -106,4 +109,44 @@ public class VeterinarianServiceImpl implements VeterinarianService {
         veterinarianRepository.delete(veterinarian);
     }
 
+    @Override
+    public List<VeterinarianResponse> searchByLocation(String city, String state) {
+        log.info("Searching veterinarians - city: {}, state: {}", city, state);
+
+        List<Veterinarian> veterinarians;
+
+        if (city != null && state != null) {
+            // Busca por cidade E estado
+            veterinarians = veterinarianRepository.findByCityAndState(city, state);
+        } else if (city != null) {
+            // Busca apenas por cidade
+            veterinarians = veterinarianRepository.findByCity(city);
+        } else if (state != null) {
+            // Busca apenas por estado
+            veterinarians = veterinarianRepository.findByState(state);
+        } else {
+            // Se não passou nenhum filtro, retorna todos
+            veterinarians = veterinarianRepository.findByUser_UserType(UserType.VETERINARIO, Sort.by(Sort.Direction.ASC, "id"));
+        }
+
+        log.info("Found {} veterinarians", veterinarians.size());
+
+        return veterinarians.stream()
+                .map(veterinarianMapper::toResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<VeterinarianResponse> findNearby(Double latitude, Double longitude, Double radiusKm) {
+        log.info("Searching veterinarians nearby - lat: {}, lng: {}, radius: {}km",
+                latitude, longitude, radiusKm);
+
+        List<Veterinarian> veterinarians = veterinarianRepository.findNearby(latitude, longitude, radiusKm);
+
+        log.info("Found {} veterinarians within {}km", veterinarians.size(), radiusKm);
+
+        return veterinarians.stream()
+                .map(veterinarianMapper::toResponseDTO)
+                .toList();
+    }
 }

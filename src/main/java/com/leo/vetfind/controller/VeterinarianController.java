@@ -5,7 +5,9 @@ import com.leo.vetfind.dto.veterinarian.VeterinarianResponse;
 import com.leo.vetfind.dto.veterinarian.UpdateVeterinarianRequest;
 import com.leo.vetfind.service.veterinario.VeterinarianServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +22,14 @@ import java.util.List;
 @Tag(name="Veterinarians", description = "Veterinarians profile management endpoints")
 public class VeterinarianController {
 
-    private final VeterinarianServiceImpl veterinarioService;
+    private final VeterinarianServiceImpl veterinarianService;
 
     @Operation(summary = "Create a Veterinarian profile", description = "Creates a veterinarian profile linked to a existing user with VETERINARIO type")
     @ApiResponse(responseCode = "200", description = "Veterinarian profile created successfully")
     @ApiResponse(responseCode = "400", description = "Invalid data, CRMV already exists, user not found or user is not VETERINARIO type")
     @PostMapping
     public ResponseEntity<VeterinarianResponse> create(@Valid @RequestBody CreateVeterinarianRequest dto) {
-        VeterinarianResponse response = veterinarioService.createVeterinarian(dto);
+        VeterinarianResponse response = veterinarianService.createVeterinarian(dto);
             return ResponseEntity.ok(response);
     }
 
@@ -36,7 +38,7 @@ public class VeterinarianController {
     @ApiResponse(responseCode = "200", description = "Veterinarian retrieved successfully")
     @GetMapping
     public ResponseEntity<List<VeterinarianResponse>> findAllVeterinarian() {
-            return ResponseEntity.ok(veterinarioService.findAllVeterinarians());
+            return ResponseEntity.ok(veterinarianService.findAllVeterinarians());
     }
 
 
@@ -45,7 +47,7 @@ public class VeterinarianController {
     @ApiResponse(responseCode = "404", description = "Veterinarian not found")
     @GetMapping("/{id}")
     public ResponseEntity<VeterinarianResponse> findVeterinarianById(@PathVariable Long id) {
-        VeterinarianResponse response = veterinarioService.findVeterinarianById(id);
+        VeterinarianResponse response = veterinarianService.findVeterinarianById(id);
             return ResponseEntity.ok(response);
     }
 
@@ -57,7 +59,7 @@ public class VeterinarianController {
     @PutMapping("/{id}")
     public ResponseEntity<VeterinarianResponse> updateVeterinarian (@PathVariable Long id, @Valid @RequestBody UpdateVeterinarianRequest dto) {
         VeterinarianResponse response =
-                veterinarioService.updateVeterinarian(id, dto);
+                veterinarianService.updateVeterinarian(id, dto);
 
         return ResponseEntity.ok(response);
     }
@@ -68,8 +70,42 @@ public class VeterinarianController {
     @ApiResponse(responseCode = "404", description = "Veterinarian not found")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVeterinarian (@PathVariable Long id) {
-        veterinarioService.deleteVeterinarian(id);
+        veterinarianService.deleteVeterinarian(id);
         return ResponseEntity.noContent().build();
     }
 
+
+    @GetMapping("/search")
+    @Operation(summary = "Search veterinarians by location", description = "Search veterinarians by city and/or state. Can filter by city only, state only, or both.")
+    @ApiResponse(responseCode = "200", description = "Veterinarians found")
+    public ResponseEntity<List<VeterinarianResponse>> searchByLocation(
+            @Parameter(description = "City name", example = "Campinas")
+            @RequestParam(required = false) String city,
+
+            @Parameter(description = "State (UF)", example = "SP")
+            @RequestParam(required = false) String state) {
+
+        List<VeterinarianResponse> veterinarians = veterinarianService.searchByLocation(city, state);
+        return ResponseEntity.ok(veterinarians);
+    }
+
+
+    @GetMapping("/nearby")
+    @Operation(summary = "Find veterinarians nearby", description = "Find veterinarians within a specified radius (in kilometers) from given coordinates. Only returns veterinarians with registered coordinates.")
+    @ApiResponse(responseCode = "200", description = "Veterinarians found, ordered by distance (closest first)")
+    @ApiResponse(responseCode = "400", description = "Invalid parameters")
+    public ResponseEntity<List<VeterinarianResponse>> findNearby(
+
+            @Parameter(description = "Latitude", required = true, example = "-22.9099")
+            @RequestParam Double latitude,
+
+            @Parameter(description = "Longitude", required = true, example = "-47.0626")
+            @RequestParam Double longitude,
+
+            @Parameter(description = "Search radius in kilometers", example = "10")
+            @RequestParam(defaultValue = "10") Double radiusKm) {
+
+        List<VeterinarianResponse> veterinarians = veterinarianService.findNearby(latitude, longitude, radiusKm);
+        return ResponseEntity.ok(veterinarians);
+    }
 }

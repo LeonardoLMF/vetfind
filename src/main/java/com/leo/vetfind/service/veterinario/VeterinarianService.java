@@ -17,4 +17,8 @@ public interface VeterinarianService {
     VeterinarianResponse updateVeterinarian(Long id, UpdateVeterinarianRequest dto);
 
     void deleteVeterinarian(Long id);
+
+    List<VeterinarianResponse> searchByLocation(String city, String state);
+
+    List<VeterinarianResponse> findNearby(Double latitude, Double longitude, Double radiusKm);
 }
