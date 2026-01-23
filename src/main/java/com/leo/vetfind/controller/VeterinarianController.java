@@ -26,7 +26,7 @@ public class VeterinarianController {
 
     @Operation(summary = "Create a Veterinarian profile", description = "Creates a veterinarian profile linked to a existing user with VETERINARIO type")
     @ApiResponse(responseCode = "200", description = "Veterinarian profile created successfully")
-    @ApiResponse(responseCode = "400", description = "Invalid data, CRMV already exists, user not found or user is not VETERINARIO type")
+    @ApiResponse(responseCode = "400", description = "Invalid data, CRMV already exists, user not found or user is not VETERINARIAN type")
     @PostMapping
     public ResponseEntity<VeterinarianResponse> create(@Valid @RequestBody CreateVeterinarianRequest dto) {
         VeterinarianResponse response = veterinarianService.createVeterinarian(dto);

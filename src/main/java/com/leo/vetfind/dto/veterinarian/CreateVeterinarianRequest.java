@@ -19,6 +19,6 @@ public class CreateVeterinarianRequest {
 
 
     @NotNull(message = "User ID is required")
-    @Schema(description = "ID of the user to link (Must be VETERINARIO type)", example = "2")
+    @Schema(description = "ID of the user to link (Must be VETERINARIAN type)", example = "2")
     private Long userId;
 }

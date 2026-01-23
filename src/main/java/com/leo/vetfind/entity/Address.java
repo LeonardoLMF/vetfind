@@ -11,24 +11,24 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Address {
-    @Column(name = "logradouro")
+    @Column(name = "street")
     private String street;
 
-    @Column(name = "numero", length = 10)
+    @Column(name = "number", length = 10)
     private String number;
 
-    @Column(name = "complemento")
+    @Column(name = "complement")
     private String complement;
 
-    @Column(name = "bairro")
+    @Column(name = "neighborhood")
     private String neighborhood;
 
-    @Column(name = "cidade")
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "estado", length = 2)
+    @Column(name = "state", length = 2)
     private String state;  // SP RJ etc...
 
-    @Column(name = "cep", length = 8)
+    @Column(name = "zip_code", length = 8)
     private String zipCode;  // 12000100
 }

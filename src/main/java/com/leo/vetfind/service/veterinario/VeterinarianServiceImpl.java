@@ -42,7 +42,7 @@ public class VeterinarianServiceImpl implements VeterinarianService {
                 .orElseThrow(() -> new UserNotFoundException(dto.getUserId()));
 
         // verifica se o tipo do usuario é diferente de VETERINARIO
-        if (user.getUserType() != UserType.VETERINARIO) {
+        if (user.getUserType() != UserType.VETERINARIAN) {
             throw new InvalidUserTypeException();
         }
 
@@ -72,7 +72,7 @@ public class VeterinarianServiceImpl implements VeterinarianService {
     @Override
     public List<VeterinarianResponse> findAllVeterinarians() {
         return veterinarianRepository
-                .findByUser_UserType(UserType.VETERINARIO, Sort.by(Sort.Direction.ASC, "id"))
+                .findByUser_UserType(UserType.VETERINARIAN, Sort.by(Sort.Direction.ASC, "id"))
                 .stream()
                 .map(veterinarianMapper::toResponseDTO)
                 .toList();
@@ -126,7 +126,7 @@ public class VeterinarianServiceImpl implements VeterinarianService {
             veterinarians = veterinarianRepository.findByState(state);
         } else {
             // Se não passou nenhum filtro, retorna todos
-            veterinarians = veterinarianRepository.findByUser_UserType(UserType.VETERINARIO, Sort.by(Sort.Direction.ASC, "id"));
+            veterinarians = veterinarianRepository.findByUser_UserType(UserType.VETERINARIAN, Sort.by(Sort.Direction.ASC, "id"));
         }
 
         log.info("Found {} veterinarians", veterinarians.size());

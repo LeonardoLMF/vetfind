@@ -32,7 +32,7 @@ public class CreateUserRequest {
     private String phone;
 
     @NotNull(message = "O tipo do usuário é obrigatório")
-    @Schema(description = "Type of user", example = "PROPRIETARIO", allowableValues = {"PROPRIETARIO", "VETERINARIO"})
+    @Schema(description = "Type of user", example = "OWNER", allowableValues = {"OWNER", "VETERINARIAN"})
     private UserType userType;
 
     @Valid

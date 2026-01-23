@@ -31,11 +31,11 @@ public interface VeterinarianRepository extends JpaRepository<Veterinarian, Long
 
     // haversine formula for calculate distances between geo cordinates (basically a findByProximity)
     @Query(value = """
-        SELECT v.* FROM veterinarios v
-        INNER JOIN usuarios u ON v.usuario_id = u.id
+        SELECT v.* FROM veterinarians v
+        INNER JOIN users u ON v.user_id = u.id
         WHERE u.latitude IS NOT NULL 
         AND u.longitude IS NOT NULL
-        AND u.tipo_usuario = 'VETERINARIO'
+        AND u.user_type = 'VETERINARIAN'
         AND (6371 * acos(
             LEAST(1.0, GREATEST(-1.0,
                 cos(radians(:latitude)) 

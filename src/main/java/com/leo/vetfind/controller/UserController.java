@@ -25,7 +25,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @Operation(summary = "Create a new user", description = "Creates a new user (PROPRIETARIO or VETERINARIO)")
+    @Operation(summary = "Create a new user", description = "Creates a new user (OWNER or VETERINARIAN)")
     @ApiResponse(responseCode = "200", description = "User created successfully")
     @ApiResponse(responseCode = "400", description = "Invalid input data")
     @PostMapping
@@ -65,7 +65,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Delete user", description = "Deletes a user from the system. Cannot delet users with Veterinarian profile")
+    @Operation(summary = "Delete user", description = "Deletes a user from the system. Cannot delete users with Veterinarian profile")
     @ApiResponse(responseCode = "204", description = "User deleted successfully")
     @ApiResponse(responseCode = "404", description = "User not found")
     @ApiResponse(responseCode = "400", description = "Cannot delete user with veterinarian profile")

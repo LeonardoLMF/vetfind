@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,15 +22,15 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false, name = "senha")
+    @Column(nullable = false, name = "password")
     private String password;
 
-    @Column(nullable = false, name = "telefone")
+    @Column(nullable = false, name = "phone")
     private String phone;
 
     //determino se o usuario é um PROPRIETARIO ou VETERINARIO
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "tipo_usuario")
+    @Column(nullable = false, name = "user_type")
     private UserType userType;
 
     @Embedded

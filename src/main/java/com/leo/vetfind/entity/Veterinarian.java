@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "veterinarios")
+@Table(name = "veterinarians")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,7 +26,7 @@ public class Veterinarian {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId //pega o mesmo id do usuario
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "veterinarian", cascade = CascadeType.ALL, orphanRemoval = true)

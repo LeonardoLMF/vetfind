@@ -71,6 +71,6 @@ record LoginResponse(
         @Schema(description = "User email")
         String email,
 
-        @Schema(description = "User type", example = "PROPRIETARIO")
+        @Schema(description = "User type", example = "OWNER")
         String userType
 ) {}

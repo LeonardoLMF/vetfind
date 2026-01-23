@@ -22,7 +22,7 @@ public class UserResponse {
     @Schema(description = "User's phone", example = "19987654321")
     private String phone;
 
-    @Schema(description = "Type of user", example = "PROPRIETARIO")
+    @Schema(description = "Type of user", example = "OWNER OR VETERINARIAN")
     private String userType;
 
     @Schema(description = "User's address")
