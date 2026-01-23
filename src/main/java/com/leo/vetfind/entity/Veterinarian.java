@@ -3,6 +3,9 @@ package com.leo.vetfind.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "veterinarios")
 @Getter
@@ -25,4 +28,7 @@ public class Veterinarian {
     @MapsId //pega o mesmo id do usuario
     @JoinColumn(name = "usuario_id")
     private User user;
+
+    @OneToMany(mappedBy = "veterinarian", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Availability> availabilities = new ArrayList<>();
 }

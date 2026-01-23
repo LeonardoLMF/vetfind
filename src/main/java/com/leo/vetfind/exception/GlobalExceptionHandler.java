@@ -1,6 +1,7 @@
 package com.leo.vetfind.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     // Regras de negocio
@@ -28,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     // Recurso nao encontrado
-    @ExceptionHandler({UserNotFoundException.class, VeterinarianNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, VeterinarianNotFoundException.class, AvailabilityNotFoundException.class})
     public ResponseEntity<ApiErrorResponse> handleNotFound(RuntimeException ex, HttpServletRequest request)
 
     {
@@ -47,6 +49,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleGeneric( Exception ex, HttpServletRequest request)
 
     {
+        log.error("Unexpected error occurred: ", ex);
         ApiErrorResponse erro = new ApiErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
